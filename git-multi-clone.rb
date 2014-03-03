@@ -3,7 +3,22 @@
 projects = {}
 current_project_name = ''
 
-File.open('restaurant.make') do |f|
+if !ARGV[0]
+  puts '[Error]: make file missing.'
+  puts '[Usage]: git multi-clone drupal-org.make arshad'
+  exit
+end
+
+if !ARGV[1]
+  puts '[Error]: git username missing.'
+  puts '[Usage]: git multi-clone drupal-org.make arshad'
+  exit
+end
+
+make_file = ARGV[0]
+git_username = ARGV[1]
+
+File.open(make_file) do |f|
   f.each_line do |line|
     # Get the project name.
     if match = line.match(/^projects\[([\w]*)\]/i)
@@ -61,7 +76,7 @@ projects.each do |name, project|
   end
 
   # Add url and destination.
-  command += " arshad@git.drupal.org:project/#{name}.git #{destination}"
+  command += " #{git_username}@git.drupal.org:project/#{name}.git #{destination}"
 
   puts command
 end
