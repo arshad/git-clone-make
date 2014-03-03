@@ -28,7 +28,7 @@ File.open(make_file) do |f|
     # Determine if this is a new project.
     if name && name != current_project_name
       current_project_name = name
-      projects[current_project_name] = { :type => '', :download_type => '', :revision => '', :branch => '', :subdir => '' }
+      projects[current_project_name] = { :type => 'module', :download_type => '', :revision => '', :branch => '', :subdir => '' }
     end
 
     # Get project type
