@@ -8,7 +8,7 @@ A git command that parses a Drupal make file and clones projects.
   Download script and place in your PATH
 
     $ git clone https://github.com/arshad/git-clone-make.git
-    $ cp git-clone-make /usr/local/bin
+    $ cp git-clone-make/git-clone-make /usr/local/bin
 
   Make script executable
 
