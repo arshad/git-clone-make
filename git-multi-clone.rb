@@ -5,7 +5,6 @@ current_project_name = ''
 
 File.open('restaurant.make') do |f|
   f.each_line do |line|
-
     # Get the project name.
     if match = line.match(/^projects\[([\w]*)\]/i)
       name = match[1].to_s
@@ -14,12 +13,12 @@ File.open('restaurant.make') do |f|
     # Determine if this is a new project.
     if name && name != current_project_name
       current_project_name = name
-      projects[current_project_name] = { :name => name, :type => '', :revision => '', :branch => ''}
+      projects[current_project_name] = { :name => name, :download_type => '', :revision => '', :branch => ''}
     end
 
     # Get project download type.
     if match = line.match(/^projects\[[\w]*\]\[download\]\[type\][\s]*=[\s]*(...)$/i)
-      projects[current_project_name][:type] = match[1]
+      projects[current_project_name][:download_type] = match[1]
     end
 
     # Get project revision.
@@ -34,7 +33,7 @@ File.open('restaurant.make') do |f|
   end
 end
 
-projects = projects.select { |name, project| project[:type] == 'git' }
+projects = projects.select { |name, project| project[:download_type] == 'git' }
 
 projects.each do |name, project|
   # Build a git clone command.
@@ -45,6 +44,7 @@ projects.each do |name, project|
 
   # Add url and destination.
   command += " arshad@git.drupal.org:project/#{name}.git #{name}"
+
   puts command
 end
 
