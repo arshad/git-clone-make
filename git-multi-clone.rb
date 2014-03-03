@@ -34,6 +34,8 @@ File.open('restaurant.make') do |f|
   end
 end
 
+projects = projects.select { |name, project| project[:type] == 'git' }
+
 projects.each do |name, project|
   puts name
 end
