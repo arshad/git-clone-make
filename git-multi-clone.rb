@@ -37,7 +37,12 @@ end
 projects = projects.select { |name, project| project[:type] == 'git' }
 
 projects.each do |name, project|
-  puts name
+  # Build a git clone command.
+  command = "git clone"
+
+  # Add url and destination.
+  command += " arshad@git.drupal.org:project/#{name}.git #{name}"
+  puts command
 end
 
 # puts projects
