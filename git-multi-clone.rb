@@ -40,6 +40,9 @@ projects.each do |name, project|
   # Build a git clone command.
   command = "git clone"
 
+  # Specify branch if set.
+  command += (project[:branch]) ? " --branch #{project[:branch]}" : '';
+
   # Add url and destination.
   command += " arshad@git.drupal.org:project/#{name}.git #{name}"
   puts command
