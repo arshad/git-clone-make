@@ -13,7 +13,12 @@ File.open('restaurant.make') do |f|
     # Determine if this is a new project.
     if name && name != current_project_name
       current_project_name = name
-      projects[current_project_name] = { :name => name, :download_type => '', :revision => '', :branch => ''}
+      projects[current_project_name] = { :type => '', :download_type => '', :revision => '', :branch => ''}
+    end
+
+    # Get project type
+    if match = line.match(/^projects\[[\w]*\]\[type\][\s]*=[\s]*([a-z]*)$/i)
+      projects[current_project_name][:type] = match[1]
     end
 
     # Get project download type.
