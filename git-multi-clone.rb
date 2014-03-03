@@ -47,8 +47,15 @@ projects.each do |name, project|
   # Specify branch if set.
   command += (project[:branch]) ? " --branch #{project[:branch]}" : '';
 
+  # Determine where to put code
+  if project[:type] == 'module'
+    destination = "modules/#{name}"
+  elsif project[:type] == 'theme'
+    destination = "themes/#{name}"
+  end
+
   # Add url and destination.
-  command += " arshad@git.drupal.org:project/#{name}.git #{name}"
+  command += " arshad@git.drupal.org:project/#{name}.git #{destination}"
 
   puts command
 end
