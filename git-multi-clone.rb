@@ -13,7 +13,7 @@ File.open('restaurant.make') do |f|
     # Determine if this is a new project.
     if name && name != current_project_name
       current_project_name = name
-      projects[current_project_name] = { :type => '', :download_type => '', :revision => '', :branch => ''}
+      projects[current_project_name] = { :type => '', :download_type => '', :revision => '', :branch => '', :subdir => '' }
     end
 
     # Get project type
@@ -35,6 +35,11 @@ File.open('restaurant.make') do |f|
     if match = line.match(/^projects\[[\w]*\]\[download\]\[branch\][\s]*=[\s]*([\S]*)/i)
       projects[current_project_name][:branch] = match[1]
     end
+
+    # Get project subdir
+    if match = line.match(/^projects\[[\w]*\]\[subdir\][\s]*=[\s]*([a-z]*)$/)
+      projects[current_project_name][:subdir] = match[1]
+    end
   end
 end
 
@@ -49,7 +54,8 @@ projects.each do |name, project|
 
   # Determine where to put code
   if project[:type] == 'module'
-    destination = "modules/#{name}"
+    subdir = (project[:subdir]) ? "#{project[:subdir]}/" : ''
+    destination = "modules/#{subdir}#{name}"
   elsif project[:type] == 'theme'
     destination = "themes/#{name}"
   end
