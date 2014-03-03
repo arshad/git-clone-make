@@ -78,6 +78,9 @@ projects.each do |name, project|
   # Add url and destination.
   command += " #{git_username}@git.drupal.org:project/#{name}.git #{destination}"
 
+  # Remove existing files first.
+  system("rm -rf #{destination}")
+
   # Run command
   system(command)
 end
