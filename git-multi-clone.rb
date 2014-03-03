@@ -78,15 +78,6 @@ projects.each do |name, project|
   # Add url and destination.
   command += " #{git_username}@git.drupal.org:project/#{name}.git #{destination}"
 
-  puts command
+  # Run command
+  system(command)
 end
-
-# puts projects
-
-# repos.each do |url, destination|
-#   # Get the name of the repo to clone from url.
-#   name = url.scan(/([\w\-]*).git$/).last.first
-
-#   # Call git clone.
-#   system("git clone #{url} #{destination}/#{name}");
-# end
