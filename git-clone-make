@@ -36,19 +36,11 @@ File.open(make_file) do |f|
       projects[current_project_name][:project_type] = match[1]
     end
 
-    # Get project download type.
-    if match = line.match(/^projects\[[\w]*\]\[download\]\[type\][\s]*=[\s]*(...)$/i)
-      projects[current_project_name][:type] = match[1]
-    end
-
-    # Get project revision.
-    if match = line.match(/^projects\[[\w]*\]\[download\]\[revision\][\s]*=[\s]*([\S]*)/i)
-      projects[current_project_name][:revision] = match[1]
-    end
-
-    # Get project branch.
-    if match = line.match(/^projects\[[\w]*\]\[download\]\[branch\][\s]*=[\s]*([\S]*)/i)
-      projects[current_project_name][:branch] = match[1]
+    # Get project download type, revision and branch.
+    [:type, :revision, :branch].each do |download|
+      if match = line.match(/^projects\[[\w]*\]\[download\]\[#{Regexp.quote(download)}\][\s]*=[\s]*([\S]*)$/i)
+        projects[current_project_name][download] = match[1]
+      end 
     end
 
     # Get project subdir
@@ -58,6 +50,7 @@ File.open(make_file) do |f|
   end
 end
 
+# Use only projects with download type git.
 projects = projects.select { |name, project| project[:type] == 'git' }
 
 projects.each do |name, project|
@@ -82,5 +75,6 @@ projects.each do |name, project|
   system("rm -rf #{destination}")
 
   # Run command
+  puts "Running #{command}"
   system(command)
 end
