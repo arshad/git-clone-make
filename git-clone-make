@@ -28,12 +28,12 @@ File.open(make_file) do |f|
     # Determine if this is a new project.
     if name && name != current_project_name
       current_project_name = name
-      projects[current_project_name] = { :type => 'module', :download_type => '', :revision => '', :branch => '', :subdir => '' }
+      projects[current_project_name] = { :project_type => 'module', :download_type => '', :revision => '', :branch => '', :subdir => '' }
     end
 
     # Get project type
     if match = line.match(/^projects\[[\w]*\]\[type\][\s]*=[\s]*([a-z]*)$/i)
-      projects[current_project_name][:type] = match[1]
+      projects[current_project_name][:project_type] = match[1]
     end
 
     # Get project download type.
@@ -68,10 +68,10 @@ projects.each do |name, project|
   command += (project[:branch]) ? " --branch #{project[:branch]}" : '';
 
   # Determine where to put code
-  if project[:type] == 'module'
+  if project[:project_type] == 'module'
     subdir = (project[:subdir]) ? "#{project[:subdir]}/" : ''
     destination = "modules/#{subdir}#{name}"
-  elsif project[:type] == 'theme'
+  elsif project[:project_type] == 'theme'
     destination = "themes/#{name}"
   end
 
