@@ -28,7 +28,7 @@ File.open(make_file) do |f|
     # Determine if this is a new project.
     if name && name != current_project_name
       current_project_name = name
-      projects[current_project_name] = { :project_type => 'module', :download_type => '', :revision => '', :branch => '', :subdir => '' }
+      projects[current_project_name] = { :project_type => 'module', :type => '', :revision => '', :branch => '', :subdir => '' }
     end
 
     # Get project type
@@ -38,7 +38,7 @@ File.open(make_file) do |f|
 
     # Get project download type.
     if match = line.match(/^projects\[[\w]*\]\[download\]\[type\][\s]*=[\s]*(...)$/i)
-      projects[current_project_name][:download_type] = match[1]
+      projects[current_project_name][:type] = match[1]
     end
 
     # Get project revision.
@@ -58,7 +58,7 @@ File.open(make_file) do |f|
   end
 end
 
-projects = projects.select { |name, project| project[:download_type] == 'git' }
+projects = projects.select { |name, project| project[:type] == 'git' }
 
 projects.each do |name, project|
   # Build a git clone command.
