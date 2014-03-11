@@ -1,7 +1,7 @@
 git-clone-make
 ---
 
-A git command that parses a Drupal make file and clones projects.
+A git command that parses a Drupal make file and clones projects that use git as the download method.
 
 ### Installation
 
